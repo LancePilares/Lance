@@ -43,13 +43,13 @@
     <script>
         
         function signup(event) {
-            event.preventDefault(); // Prevents form submission
+            event.preventDefault(); 
 
             const username = document.getElementById("signup_username").value;
             const password = document.getElementById("signup_password").value;
 
             if (username && password) {
-                // Retrieve existing users from localStorage or initialize empty array
+                
                 const users = JSON.parse(localStorage.getItem('users')) || [];
 
                
@@ -63,7 +63,7 @@
                 users.push({ username, password });
                 localStorage.setItem('users', JSON.stringify(users)); 
 
-                alert("Sign-Up Successful! You can now log in.");
+                alert("Sign-Up Successfully! You can now log in.");
 
                 
                 document.getElementById("signup_username").value = "";
@@ -75,13 +75,13 @@
 
       
         function login(event) {
-            event.preventDefault(); // Prevents form submission
+            event.preventDefault(); 
 
             const username = document.getElementById("login_username").value;
             const password = document.getElementById("login_password").value;
 
             if (username && password) {
-                // Retrieve users from localStorage
+                
                 const users = JSON.parse(localStorage.getItem('users')) || [];
 
                
