@@ -3,35 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Sign Up and Log In</title>
 </head>
 <body>
-    
-    <div class="calculator">
-        <input type="text" id="display" placeholder="0" disabled>
-        <div class="buttons">
-            <button class="btn">7</button>
-            <button class="btn">8</button>
-            <button class="btn">9</button>
-            <button class="btn">/</button>
+    <h2>Sign Up</h2>
+    <form onsubmit="signup(event)">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="signup_username" placeholder="Username" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="signup_password" placeholder="Password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Sign Up</button></td>
+            </tr>
+        </table>
+    </form>
 
-            <button class="btn">4</button>
-            <button class="btn">5</button>
-            <button class="btn">6</button>
-            <button class="btn">*</button>
+    <h2>Log In</h2>
+    <form onsubmit="login(event)">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="login_username" placeholder="Username" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="login_password" placeholder="Password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Log In</button></td>
+            </tr>
+        </table>
+    </form>
 
-            <button class="btn">1</button>
-            <button class="btn">2</button>
-            <button class="btn">3</button>
-            <button class="btn">-</button>
+    <script>
+        
+        function signup(event) {
+            event.preventDefault(); // Prevents form submission
 
-            <button class="btn">0</button>
-            <button class="btn">.</button>
-            <button class="btn">Del</button>
-            <button class="btn">+</button>
-        </div>
-        <button class="equals">=</button>
-    </div>
+            const username = document.getElementById("signup_username").value;
+            const password = document.getElementById("signup_password").value;
+
+            if (username && password) {
+                // Retrieve existing users from localStorage or initialize empty array
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+
+               
+                const userExists = users.some(user => user.username === username);
+                if (userExists) {
+                    alert("Username already exists! Please choose a different username.");
+                    return;
+                }
+
+             
+                users.push({ username, password });
+                localStorage.setItem('users', JSON.stringify(users)); 
+
+                alert("Sign-Up Successful! You can now log in.");
+
+                
+                document.getElementById("signup_username").value = "";
+                document.getElementById("signup_password").value = "";
+            } else {
+                alert("Please fill in both fields.");
+            }
+        }
+
+      
+        function login(event) {
+            event.preventDefault(); // Prevents form submission
+
+            const username = document.getElementById("login_username").value;
+            const password = document.getElementById("login_password").value;
+
+            if (username && password) {
+                // Retrieve users from localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+
+               
+                const validUser = users.find(user => user.username === username && user.password === password);
+
+                if (validUser) {
+                    alert(`Welcome, ${username}!`);
+                } else {
+                    alert("Invalid username or password. Please try again.");
+                }
+
+                
+                document.getElementById("login_username").value = "";
+                document.getElementById("login_password").value = "";
+            } else {
+                alert("Please fill in both fields.");
+            }
+        }
+    </script>
 </body>
 </html>
